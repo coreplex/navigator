@@ -7,9 +7,28 @@ use Coreplex\Navigator\Contracts\Navigator as NavigatorContract;
 
 class Navigator implements NavigatorContract {
 
-    protected $menuCollection = [];
+    /**
+     * An instance of the navigator renderer.
+     *
+     * @var Renderer
+     */
+    protected $renderer;
 
-    public function __construct(Renderer $renderer, Store $store, $config)
+    /**
+     * An instance of a navigator store.
+     *
+     * @var Store
+     */
+    protected $store;
+
+    /**
+     * The package config.
+     *
+     * @var array
+     */
+    protected $config;
+
+    public function __construct(Renderer $renderer, Store $store, array $config)
     {
         $this->renderer = $renderer;
         $this->store = $store;

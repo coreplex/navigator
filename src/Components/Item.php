@@ -83,7 +83,7 @@ class Item extends Menu implements ItemContract, ArrayAccess {
     protected function setActiveIfMatchesCurrentRequest()
     {
         if (isset($this->item['url'])) {
-            $path = trim(str_replace($_SERVER['SERVER_NAME'], '', $this->item['url']), '/');
+            $path = trim(str_replace('http' . (empty($_SERVER['HTTPS']) ? '' : 's') . '://' . $_SERVER['SERVER_NAME'], '', $this->item['url']), '/');
 
             if ($path == trim($_SERVER['REQUEST_URI'], '/')) {
                 $this->active = true;

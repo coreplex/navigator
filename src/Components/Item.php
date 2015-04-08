@@ -21,25 +21,16 @@ class Item extends Menu implements ItemContract, ArrayAccess {
     protected $parent;
 
     /**
-     * Set if the current item is the active item.
+     *
      *
      * @var bool
      */
     protected $active = false;
 
     /**
-     * An instance of a navigator renderer.
-     *
      * @var Renderer
      */
     protected $renderer;
-
-    /**
-     * An array of item filters.
-     *
-     * @var array
-     */
-    protected $filters = [];
 
     public function __construct(Renderer $renderer, array $filters, array $item)
     {

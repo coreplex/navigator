@@ -33,7 +33,7 @@ class Navigator implements NavigatorContract {
      *
      * @var array
      */
-    protected $filters;
+    protected $filters = [];
 
     public function __construct(Renderer $renderer, Store $store, array $config)
     {

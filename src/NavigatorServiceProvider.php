@@ -13,7 +13,6 @@ class NavigatorServiceProvider extends ServiceProvider
         ]);
 
         $this->mergeConfigFrom(__DIR__.'/../config/navigator.php', 'navigator');
-
     }
 
     /**

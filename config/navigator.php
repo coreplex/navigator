@@ -7,7 +7,7 @@ return [
      *  Base menu items
      * =======================================================================
      *
-     * You can set base menu items here if you are using the array store.
+     * Set any class based menus here.
      */
     'menus' => [
         //

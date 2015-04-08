@@ -3,18 +3,18 @@
 use Coreplex\Navigator\Contracts\Store;
 use Coreplex\Navigator\Exceptions\MenuNotFoundException;
 
-class ArrayStore implements Store {
+class ArrayStore extends AbstractStore implements Store {
 
     /**
-     * The store items.
+     * An array of menus.
      *
      * @var array
      */
-    protected $items = [];
+    protected $menus = [];
 
-    public function __construct(array $items)
+    public function __construct(array $menus)
     {
-        $this->items = $items;
+        $this->menus = $menus;
     }
 
     /**
@@ -26,8 +26,9 @@ class ArrayStore implements Store {
     {
         $items = [];
 
-        foreach ($this->items as $menu) {
-            $items = array_merge($items, $menu['items']);
+        foreach ($this->menus as $key => $menu) {
+            $callback = $this->buildClassCallback($this->menus[$key]);
+            $items = array_merge($items, $callback());
         }
 
         return $items;
@@ -46,11 +47,12 @@ class ArrayStore implements Store {
         $items = [];
 
         foreach ($keys as $key) {
-            if ( ! array_key_exists($key, $this->items)) {
+            if ( ! array_key_exists($key, $this->menus)) {
                 throw new MenuNotFoundException("No menu found with the name '$key'");
             }
 
-            $items = array_merge($items, $this->items[$key]['items']);
+            $callback = $this->buildClassCallback($this->menus[$key]);
+            $items = array_merge($items, $callback());
         }
 
         return $items;

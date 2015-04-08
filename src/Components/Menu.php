@@ -87,7 +87,7 @@ class Menu implements IteratorAggregate, MenuContract
 
                 foreach ($callbacks as $callback) {
                     if ( ! $callback()) {
-                        $valid = false;
+                       $valid = false;
                         break;
                     }
                 }

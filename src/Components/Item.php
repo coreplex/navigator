@@ -2,8 +2,9 @@
 
 use ArrayAccess;
 use Coreplex\Navigator\Contracts\Item as ItemContract;
+use Coreplex\Navigator\Contracts\Renderer;
 
-class Item implements ItemContract, ArrayAccess {
+class Item extends Menu implements ItemContract, ArrayAccess {
 
     /**
      * The current navigation item.
@@ -13,14 +14,46 @@ class Item implements ItemContract, ArrayAccess {
     protected $item;
 
     /**
+     * The parent item if this is a child item.
+     *
+     * @var Item
+     */
+    protected $parent;
+
+    /**
+     * Set if the current item is the active item.
+     *
      * @var bool
      */
     protected $active = false;
 
-    public function __construct(array $item)
+    /**
+     * An instance of a navigator renderer.
+     *
+     * @var Renderer
+     */
+    protected $renderer;
+
+    /**
+     * An array of item filters.
+     *
+     * @var array
+     */
+    protected $filters = [];
+
+    public function __construct(Renderer $renderer, array $filters, array $item)
     {
+        parent::__construct($renderer, $filters);
+
         $this->item = $item;
+        $this->renderer = $renderer;
+        $this->filters = $filters;
+
         $this->setActiveIfMatchesCurrentRequest();
+
+        if (isset($item['items'])) {
+            $this->items($item['items']);
+        }
     }
 
     /**
@@ -31,6 +64,25 @@ class Item implements ItemContract, ArrayAccess {
     public function isActive()
     {
         return $this->active;
+    }
+
+    /**
+     * Set the menu items.
+     *
+     * @param array $items
+     * @return $this
+     */
+    public function items(array $items)
+    {
+        $items = $this->parseItems($items);
+
+        foreach ($items as &$item) {
+            $item['parent'] = $this;
+        }
+
+        $this->item['items'] = $items;
+
+        return $this;
     }
 
     /**

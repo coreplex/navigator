@@ -28,11 +28,24 @@ class Navigator implements NavigatorContract {
      */
     protected $config;
 
+    /**
+     * An array of item filters.
+     *
+     * @var array
+     */
+    protected $filters;
+
     public function __construct(Renderer $renderer, Store $store, array $config)
     {
         $this->renderer = $renderer;
         $this->store = $store;
         $this->config = $config;
+
+        if ( ! empty($this->config['filters'])) {
+            foreach ($this->config['filters'] as $key => $class) {
+                $this->filter($key, $class);
+            }
+        }
     }
 
     /**
@@ -73,7 +86,7 @@ class Navigator implements NavigatorContract {
      */
     protected function newMenu()
     {
-        return new Menu($this->renderer);
+        return new Menu($this->renderer, $this->filters);
     }
 
     /**
@@ -93,6 +106,20 @@ class Navigator implements NavigatorContract {
         }
 
         return $keys;
+    }
+
+    /**
+     * Register a new filter.
+     *
+     * @param $key
+     * @param $class
+     * @return $this
+     */
+    public function filter($key, $class)
+    {
+        $this->filters[$key] = $class;
+
+        return $this;
     }
 
 }

@@ -51,7 +51,7 @@ interface Menu {
     /**
      * Render the template.
      *
-     * @return mixed
+     * @return string
      */
     public function render();
 

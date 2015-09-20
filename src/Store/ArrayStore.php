@@ -1,10 +1,12 @@
-<?php namespace Coreplex\Navigator\Store;
+<?php
+
+namespace Coreplex\Navigator\Store;
 
 use Coreplex\Navigator\Contracts\Store;
 use Coreplex\Navigator\Exceptions\MenuNotFoundException;
 
-class ArrayStore extends AbstractStore implements Store {
-
+class ArrayStore extends AbstractStore implements Store
+{
     /**
      * An array of menus.
      *
@@ -65,5 +67,4 @@ class ArrayStore extends AbstractStore implements Store {
 
         return $items;
     }
-
 }

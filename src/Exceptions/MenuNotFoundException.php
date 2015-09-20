@@ -1,3 +1,8 @@
-<?php namespace Coreplex\Navigator\Exceptions;
+<?php
 
-class MenuNotFoundException extends \Exception {}
+namespace Coreplex\Navigator\Exceptions;
+
+class MenuNotFoundException extends \Exception
+{
+
+}

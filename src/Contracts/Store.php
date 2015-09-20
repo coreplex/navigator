@@ -1,7 +1,9 @@
-<?php namespace Coreplex\Navigator\Contracts;
+<?php
 
-interface Store {
+namespace Coreplex\Navigator\Contracts;
 
+interface Store
+{
     /**
      * Retrieve all menu items, regardless of thier parent item.
      *
@@ -16,5 +18,4 @@ interface Store {
      * @return array
      */
     public function find($menu);
-
 }

@@ -1,12 +1,14 @@
-<?php namespace Coreplex\Navigator;
+<?php
+
+namespace Coreplex\Navigator;
 
 use Coreplex\Core\Contracts\Renderer;
 use Coreplex\Navigator\Contracts\Store;
 use Coreplex\Navigator\Components\Menu;
 use Coreplex\Navigator\Contracts\Navigator as NavigatorContract;
 
-class Navigator implements NavigatorContract {
-
+class Navigator implements NavigatorContract
+{
     /**
      * An instance of the navigator renderer.
      *
@@ -121,5 +123,4 @@ class Navigator implements NavigatorContract {
 
         return $this;
     }
-
 }

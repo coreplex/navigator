@@ -1,7 +1,9 @@
-<?php namespace Coreplex\Navigator\Contracts;
+<?php
 
-interface Navigator {
+namespace Coreplex\Navigator\Contracts;
 
+interface Navigator
+{
     /**
      * Create a new menu and return it with all of the menu items.
      *
@@ -16,5 +18,4 @@ interface Navigator {
      * @return Menu
      */
     public function get($keys);
-
 }

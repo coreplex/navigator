@@ -1,3 +1,8 @@
-<?php namespace Coreplex\Navigator\Exceptions;
+<?php
 
-class TemplateNotSetException extends \Exception {}
+namespace Coreplex\Navigator\Exceptions;
+
+class TemplateNotSetException extends \Exception
+{
+
+}

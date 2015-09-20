@@ -1,7 +1,9 @@
-<?php namespace Coreplex\Navigator\Store;
+<?php
 
-abstract class AbstractStore {
+namespace Coreplex\Navigator\Store;
 
+abstract class AbstractStore
+{
     /**
      * Retrieve all menu items, regardless of thier parent item.
      *
@@ -29,12 +31,13 @@ abstract class AbstractStore {
     {
         list($class, $method) = $this->parseClassCallback($class);
 
-        return function() use ($class, $method)
-        {
-            $callable = array(new $class, $method);
+        return function () use ($class, $method) {
+            $callable = [new $class, $method];
+
             return call_user_func_array($callable, func_get_args());
         };
     }
+
     /**
      * Parse the filter name to the class name and method.
      *
@@ -46,7 +49,7 @@ abstract class AbstractStore {
         if (strpos($class, '@') !== false) {
             return explode('@', $class);
         }
-        return array($class, 'design');
-    }
 
+        return [$class, 'design'];
+    }
 }

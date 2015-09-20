@@ -1,11 +1,13 @@
-<?php namespace Coreplex\Navigator\Components;
+<?php
+
+namespace Coreplex\Navigator\Components;
 
 use ArrayAccess;
 use Coreplex\Core\Contracts\Renderer;
 use Coreplex\Navigator\Contracts\Item as ItemContract;
 
-class Item extends Menu implements ItemContract, ArrayAccess {
-
+class Item extends Menu implements ItemContract, ArrayAccess
+{
     /**
      * The current navigation item.
      *
@@ -76,7 +78,8 @@ class Item extends Menu implements ItemContract, ArrayAccess {
     protected function setActiveIfMatchesCurrentRequest()
     {
         if (isset($this->item['url'])) {
-            $path = trim(str_replace('http' . (empty($_SERVER['HTTPS']) ? '' : 's') . '://' . $_SERVER['SERVER_NAME'], '', $this->item['url']), '/');
+            $path = trim(str_replace('http' . (empty($_SERVER['HTTPS']) ? '' : 's') . '://' . $_SERVER['SERVER_NAME'],
+                '', $this->item['url']), '/');
 
             if ($path == trim($_SERVER['REQUEST_URI'], '/')) {
                 $this->active = true;
@@ -114,8 +117,8 @@ class Item extends Menu implements ItemContract, ArrayAccess {
      * Offset to set
      *
      * @link http://php.net/manual/en/arrayaccess.offsetset.php
-     * @param mixed $key The offset to assign the value to.
-     * @param mixed $value  The value to set.
+     * @param mixed $key   The offset to assign the value to.
+     * @param mixed $value The value to set.
      * @return void
      */
     public function offsetSet($key, $value)
@@ -142,7 +145,7 @@ class Item extends Menu implements ItemContract, ArrayAccess {
     /**
      * Dynamically retrieve a value from the item.
      *
-     * @param  string  $key
+     * @param  string $key
      * @return mixed
      */
     public function __get($key)
@@ -153,8 +156,8 @@ class Item extends Menu implements ItemContract, ArrayAccess {
     /**
      * Dynamically set a value for the item.
      *
-     * @param  string  $key
-     * @param  mixed   $value
+     * @param  string $key
+     * @param  mixed  $value
      * @return void
      */
     public function __set($key, $value)
@@ -165,7 +168,7 @@ class Item extends Menu implements ItemContract, ArrayAccess {
     /**
      * Dynamically check if key is set for the item.
      *
-     * @param  string  $key
+     * @param  string $key
      * @return void
      */
     public function __isset($key)
@@ -176,12 +179,11 @@ class Item extends Menu implements ItemContract, ArrayAccess {
     /**
      * Dynamically unset a value from the item.
      *
-     * @param  string  $key
+     * @param  string $key
      * @return void
      */
     public function __unset($key)
     {
         unset($this->item[$key]);
     }
-
 }

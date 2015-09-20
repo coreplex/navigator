@@ -1,7 +1,9 @@
-<?php namespace Coreplex\Navigator\Contracts;
+<?php
 
-interface Menu {
+namespace Coreplex\Navigator\Contracts;
 
+interface Menu
+{
     /**
      * Retrieve all of the menu items.
      *
@@ -54,5 +56,4 @@ interface Menu {
      * @return string
      */
     public function render();
-
 }

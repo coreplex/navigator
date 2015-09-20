@@ -1,18 +1,19 @@
-<?php namespace Coreplex\Navigator;
+<?php
+
+namespace Coreplex\Navigator;
 
 use ReflectionClass;
 use Illuminate\Support\ServiceProvider;
 
 class NavigatorServiceProvider extends ServiceProvider
 {
-
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../config/navigator.php' => config_path('navigator.php'),
+            __DIR__ . '/../config/navigator.php' => config_path('navigator.php'),
         ]);
 
-        $this->mergeConfigFrom(__DIR__.'/../config/navigator.php', 'navigator');
+        $this->mergeConfigFrom(__DIR__ . '/../config/navigator.php', 'navigator');
     }
 
     /**
@@ -29,8 +30,7 @@ class NavigatorServiceProvider extends ServiceProvider
      */
     protected function registerStore()
     {
-        $this->app['Coreplex\Navigator\Contracts\Store'] = $this->app->share(function($app)
-        {
+        $this->app['Coreplex\Navigator\Contracts\Store'] = $this->app->share(function ($app) {
             return (new ReflectionClass($app['config']['navigator']['store']))->newInstanceArgs([$app['config']['navigator']['menus']]);
         });
     }
@@ -40,8 +40,7 @@ class NavigatorServiceProvider extends ServiceProvider
      */
     protected function registerNavigator()
     {
-        $this->app['Coreplex\Navigator\Contracts\Navigator'] = $this->app->share(function($app)
-        {
+        $this->app['Coreplex\Navigator\Contracts\Navigator'] = $this->app->share(function ($app) {
             return new Navigator(
                 $app['Coreplex\Core\Contracts\Renderer'],
                 $app['Coreplex\Navigator\Contracts\Store'],
@@ -49,5 +48,4 @@ class NavigatorServiceProvider extends ServiceProvider
             );
         });
     }
-
 }

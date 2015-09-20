@@ -27,8 +27,12 @@ class ArrayStore extends AbstractStore implements Store {
         $items = [];
 
         foreach ($this->menus as $key => $menu) {
-            $callback = $this->buildClassCallback($this->menus[$key]);
-            $items = array_merge($items, $callback());
+            if ( ! is_array($menu)) {
+                $callback = $this->buildClassCallback($menu);
+                $items = array_merge($items, $callback());
+            } else {
+                $items = array_merge($items, $menu);
+            }
         }
 
         return $items;
@@ -51,8 +55,12 @@ class ArrayStore extends AbstractStore implements Store {
                 throw new MenuNotFoundException("No menu found with the name '$key'");
             }
 
-            $callback = $this->buildClassCallback($this->menus[$key]);
-            $items = array_merge($items, $callback());
+            if ( ! is_array($this->menus[$key])) {
+                $callback = $this->buildClassCallback($this->menus[$key]);
+                $items = array_merge($items, $callback());
+            } else {
+                $items = array_merge($items, $this->menus[$key]);
+            }
         }
 
         return $items;

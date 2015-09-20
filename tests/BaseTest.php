@@ -46,19 +46,7 @@ class BaseTest extends PHPUnit_Framework_TestCase
                     ],
                 ],
 
-                'sidebar' => [
-                    [
-                        'title' => 'Dashboard',
-                        'url' => '/',
-                        'icon' => 'icon icon-meter',
-                        'items' => [
-                            [
-                                'title' => 'Test',
-                                'url' => '/users',
-                            ]
-                        ]
-                    ],
-                ]
+                'sidebar' => 'Coreplex\Navigator\Tests\Sidebar',
             ],
 
             /**
@@ -114,19 +102,7 @@ class BaseTest extends PHPUnit_Framework_TestCase
                 ],
             ],
 
-            'sidebar' => [
-                [
-                    'title' => 'Dashboard',
-                    'url' => '/',
-                    'icon' => 'icon icon-meter',
-                    'items' => [
-                        [
-                            'title' => 'Test',
-                            'url' => '/users',
-                        ]
-                    ]
-                ],
-            ]
+            'sidebar' => 'Coreplex\Navigator\Tests\Sidebar',
         ];
     }
 

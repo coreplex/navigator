@@ -166,6 +166,8 @@ $menu->render();
 $menu->render('path/to/template.php');
 ```
 
+This package comes with a default template as an example.
+
 ### Rendering From the Menu
 
 To access the items in a menu use the `items` method or just pass the menu through a iterator.

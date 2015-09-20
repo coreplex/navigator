@@ -1,23 +1,19 @@
-<?php namespace Coreplex\Navigator\Tests;
+<?php
 
-require_once __DIR__ . '/LaravelTestCase.php';
+namespace Coreplex\Navigator\Tests;
 
-use Coreplex\Navigator\Navigator;
-use Coreplex\Navigator\Store\ArrayStore;
-use Coreplex\Navigator\Renderers\LaravelBlade;
-
-class NavigatorTest extends LaravelTestCase {
-
+class NavigatorTest extends BaseTest
+{
     public function testNavigatorImplementsContract()
     {
-        $navigator = $this->makeNavigator();
+        $navigator = $this->navigator();
 
         $this->assertInstanceOf('Coreplex\Navigator\Contracts\Navigator', $navigator);
     }
 
     public function testAllMethodReturnsAllMenuItems()
     {
-        $navigator = $this->makeNavigator();
+        $navigator = $this->navigator();
         $items = $navigator->all();
 
         $this->assertEquals(2, count($items->all()));
@@ -25,7 +21,7 @@ class NavigatorTest extends LaravelTestCase {
 
     public function testGetMethodOnlyReturnsRelevantMenuItems()
     {
-        $navigator = $this->makeNavigator();
+        $navigator = $this->navigator();
         $items = $navigator->get('sidebar');
 
         $this->assertEquals(1, count($items->all()));
@@ -33,56 +29,9 @@ class NavigatorTest extends LaravelTestCase {
 
     public function testFiltersCanBeAddedAfterNavigatorIsInstantiated()
     {
-        $navigator = $this->makeNavigator();
+        $navigator = $this->navigator();
         $navigator = $navigator->filter('testFilter', 'NewFilter');
 
         $this->assertInstanceOf('Coreplex\Navigator\Contracts\Navigator', $navigator);
     }
-
-    protected function makeNavigator()
-    {
-        $config = $this->getConfig();
-
-        return new Navigator(new LaravelBlade($this->app['view']), new ArrayStore($this->getMenu()), $config);
-    }
-
-    protected function getMenu()
-    {
-        return [
-            'main' => [
-                'items' => [
-                    [
-                        'title' => 'Register',
-                        'items' => [
-                            [
-                                'title' => 'Test',
-                            ]
-                        ]
-                    ],
-                ],
-            ],
-
-            'sidebar' => [
-                'items' => [
-                    [
-                        'title' => 'Dashboard',
-                        'url' => '/',
-                        'icon' => 'icon icon-meter',
-                        'items' => [
-                            [
-                                'title' => 'Test',
-                                'url' => '/users',
-                            ]
-                        ]
-                    ],
-                ],
-            ]
-        ];
-    }
-
-    protected function getConfig()
-    {
-        return require __DIR__ . '/../config/navigator.php';
-    }
-
 }

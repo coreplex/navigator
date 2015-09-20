@@ -1,4 +1,4 @@
-# Navigator
+# Navigator [![Build Status](https://travis-ci.org/coreplex/navigator.svg)](https://travis-ci.org/coreplex/navigator) [![Latest Stable Version](https://poser.pugx.org/coreplex/navigator/v/stable)](https://packagist.org/packages/coreplex/navigator) [![License](https://poser.pugx.org/coreplex/navigator/license)](https://packagist.org/packages/coreplex/navigator)
 
 A PHP 5.4+ package to create navigation menus, and handle active and permissions.
 

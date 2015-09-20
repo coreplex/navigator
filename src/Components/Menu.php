@@ -102,7 +102,7 @@ class Menu implements IteratorAggregate, MenuContract
     protected function parseItems(array $items)
     {
         foreach ($items as $key => $item) {
-            $item = new Item($this->renderer, $this->filters, $item);
+            $item = new Item($this->renderer, $this->filters, $this->config, $item);
 
             if (isset($item['filter'])) {
                 $valid = true;

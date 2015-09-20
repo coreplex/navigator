@@ -1,8 +1,8 @@
 <?php namespace Coreplex\Navigator\Components;
 
 use ArrayAccess;
+use Coreplex\Core\Contracts\Renderer;
 use Coreplex\Navigator\Contracts\Item as ItemContract;
-use Coreplex\Navigator\Contracts\Renderer;
 
 class Item extends Menu implements ItemContract, ArrayAccess {
 
@@ -21,24 +21,17 @@ class Item extends Menu implements ItemContract, ArrayAccess {
     protected $parent;
 
     /**
-     *
+     * Set if this item is active.
      *
      * @var bool
      */
     protected $active = false;
 
-    /**
-     * @var Renderer
-     */
-    protected $renderer;
-
-    public function __construct(Renderer $renderer, array $filters, array $item)
+    public function __construct(Renderer $renderer, array $filters, array $config, array $item)
     {
-        parent::__construct($renderer, $filters);
+        parent::__construct($renderer, $filters, $config);
 
         $this->item = $item;
-        $this->renderer = $renderer;
-        $this->filters = $filters;
 
         $this->setActiveIfMatchesCurrentRequest();
 

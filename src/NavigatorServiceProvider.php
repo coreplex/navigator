@@ -20,20 +20,8 @@ class NavigatorServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerRenderer();
         $this->registerStore();
         $this->registerNavigator();
-    }
-
-    /**
-     * Register the navigator renderer.
-     */
-    protected function registerRenderer()
-    {
-        $this->app['Coreplex\Navigator\Contracts\Renderer'] = $this->app->share(function($app)
-        {
-            return (new ReflectionClass($app['config']['navigator']['renderer']))->newInstanceArgs([$app['view']]);
-        });
     }
 
     /**
@@ -55,7 +43,7 @@ class NavigatorServiceProvider extends ServiceProvider
         $this->app['Coreplex\Navigator\Contracts\Navigator'] = $this->app->share(function($app)
         {
             return new Navigator(
-                $app['Coreplex\Navigator\Contracts\Renderer'],
+                $app['Coreplex\Core\Contracts\Renderer'],
                 $app['Coreplex\Navigator\Contracts\Store'],
                 $app['config']['navigator']
             );

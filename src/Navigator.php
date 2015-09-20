@@ -98,7 +98,7 @@ class Navigator implements NavigatorContract {
     protected function parseKeys($keys)
     {
         if (is_string($keys)) {
-            if (str_contains($keys, ',')) {
+            if (strpos($keys, ',') !== false) {
                 return explode(',', str_replace(' ', '', $keys));
             } else {
                 $keys = [$keys];

@@ -43,7 +43,7 @@ abstract class AbstractStore {
      */
     protected function parseClassCallback($class)
     {
-        if (str_contains($class, '@')) {
+        if (strpos($class, '@') !== false) {
             return explode('@', $class);
         }
         return array($class, 'design');

@@ -1,8 +1,8 @@
 <?php namespace Coreplex\Navigator;
 
+use Coreplex\Core\Contracts\Renderer;
 use Coreplex\Navigator\Contracts\Store;
 use Coreplex\Navigator\Components\Menu;
-use Coreplex\Navigator\Contracts\Renderer;
 use Coreplex\Navigator\Contracts\Navigator as NavigatorContract;
 
 class Navigator implements NavigatorContract {
@@ -86,7 +86,7 @@ class Navigator implements NavigatorContract {
      */
     protected function newMenu()
     {
-        return new Menu($this->renderer, $this->filters);
+        return new Menu($this->renderer, $this->filters, $this->config);
     }
 
     /**

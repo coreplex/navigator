@@ -1,14 +1,15 @@
-<?php namespace Coreplex\Navigator\Components;
+<?php
+
+namespace Coreplex\Navigator\Components;
 
 use ArrayIterator;
-use IteratorAggregate;
-use Coreplex\Navigator\Contracts\Renderer;
+use Coreplex\Core\Contracts\Renderer;
 use Coreplex\Navigator\Contracts\Menu as MenuContract;
 use Coreplex\Navigator\Contracts\Item as ItemContract;
+use IteratorAggregate;
 
 class Menu implements IteratorAggregate, MenuContract
 {
-
     /**
      * An array of menu items.
      *
@@ -16,10 +17,39 @@ class Menu implements IteratorAggregate, MenuContract
      */
     protected $items = [];
 
-    public function __construct(Renderer $renderer, array $filters)
+    /**
+     * An instance of the core renderer.
+     *
+     * @var Renderer
+     */
+    protected $renderer;
+
+    /**
+     * The registered filters
+     *
+     * @var array
+     */
+    protected $filters;
+
+    /**
+     * The package config.
+     *
+     * @var array
+     */
+    protected $config;
+
+    /**
+     * The template to be rendered.
+     *
+     * @var string
+     */
+    protected $template;
+
+    public function __construct(Renderer $renderer, array $filters, array $config)
     {
         $this->renderer = $renderer;
         $this->filters = $filters;
+        $this->config = $config;
     }
 
     /**
@@ -48,24 +78,17 @@ class Menu implements IteratorAggregate, MenuContract
     /**
      * Render the template.
      *
-     * @return mixed
+     * @param null  $template
+     * @param array $data
+     * @return string
      */
-    public function render()
+    public function render($template = null, $data = [])
     {
-        return $this->renderer->render($this);
-    }
+        if ( ! isset($this->template) || $template) {
+            $this->template = $template ?: $this->config['defaultView'];
+        }
 
-    /**
-     * Set the template for the menu.
-     *
-     * @param $template
-     * @return $this
-     */
-    public function template($template)
-    {
-        $this->renderer->template($template);
-
-        return $this;
+        return $this->renderer->make($this->template, array_merge(['menu' => $this], $data));
     }
 
     /**
@@ -87,7 +110,7 @@ class Menu implements IteratorAggregate, MenuContract
 
                 foreach ($callbacks as $callback) {
                     if ( ! $callback()) {
-                       $valid = false;
+                        $valid = false;
                         break;
                     }
                 }
@@ -107,7 +130,7 @@ class Menu implements IteratorAggregate, MenuContract
     /**
      * Return the filter callbacks for a menu item.
      *
-     * @param array $filters
+     * @param array        $filters
      * @param ItemContract $item
      * @return callable
      * @throws FilterNotDefinedException
@@ -135,7 +158,7 @@ class Menu implements IteratorAggregate, MenuContract
 
     /**
      * @param ItemContract $item
-     * @param $filter
+     * @param              $filter
      * @return array
      */
     protected function parseFilter(ItemContract $item, $key, $filter)
@@ -147,26 +170,27 @@ class Menu implements IteratorAggregate, MenuContract
             $args = [$item];
         }
 
-        return array($filter, $args);
+        return [$filter, $args];
     }
 
     /**
      * Build a new callback from a class for the filter.
      *
      * @param string $class
-     * @param array $args
+     * @param array  $args
      * @return callable
      */
     protected function buildClassCallback($class, $args)
     {
         list($class, $method) = $this->parseClassCallback($class);
 
-        return function() use ($class, $method, $args)
-        {
-            $callable = array(new $class, $method);
+        return function () use ($class, $method, $args) {
+            $callable = [new $class, $method];
+
             return call_user_func_array($callable, $args);
         };
     }
+
     /**
      * Parse the filter name to the class name and method.
      *
@@ -178,9 +202,22 @@ class Menu implements IteratorAggregate, MenuContract
         if (str_contains($class, '@')) {
             return explode('@', $class);
         }
-        return array($class, 'filter');
+
+        return [$class, 'filter'];
     }
 
+    /**
+     * Set the template for the menu.
+     *
+     * @param $template
+     * @return $this
+     */
+    public function template($template)
+    {
+        $this->template = $template;
+
+        return $this;
+    }
 
     /**
      * Set the menu items.
@@ -219,7 +256,8 @@ class Menu implements IteratorAggregate, MenuContract
      *
      * @return ArrayIterator
      */
-    public function getIterator() {
+    public function getIterator()
+    {
         return new ArrayIterator($this->items);
     }
 
@@ -230,5 +268,4 @@ class Menu implements IteratorAggregate, MenuContract
     {
         return $this->render();
     }
-
 }

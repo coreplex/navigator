@@ -30,7 +30,7 @@ class NavigatorServiceProvider extends ServiceProvider
      */
     protected function registerStore()
     {
-        $this->app['Coreplex\Navigator\Contracts\Store'] = $this->app->share(function ($app) {
+        $this->app->singleton('Coreplex\Navigator\Contracts\Store', function($app) {
             return (new ReflectionClass($app['config']['navigator']['store']))->newInstanceArgs([$app['config']['navigator']['menus']]);
         });
     }
@@ -40,7 +40,7 @@ class NavigatorServiceProvider extends ServiceProvider
      */
     protected function registerNavigator()
     {
-        $this->app['Coreplex\Navigator\Contracts\Navigator'] = $this->app->share(function ($app) {
+        $this->app->singleton('Coreplex\Navigator\Contracts\Navigator', function($app) {
             return new Navigator(
                 $app['Coreplex\Core\Contracts\Renderer'],
                 $app['Coreplex\Navigator\Contracts\Store'],

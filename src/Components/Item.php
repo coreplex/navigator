@@ -88,6 +88,28 @@ class Item extends Menu implements ItemContract, ArrayAccess
     }
 
     /**
+     * Convert the item to an array.
+     */
+    public function toArray()
+    {
+        $response = $this->item;
+
+        if (array_key_exists('items', $response)) {
+            foreach ($response['items'] as $key => $item) {
+                $response['items'][$key] = $item->toArray();
+            }
+        } else {
+            $response['items'] = [];
+        }
+
+        if (array_key_exists('parent', $response)) {
+            unset($response['parent']);
+        }
+
+        return $response;
+    }
+
+    /**
      * Whether a offset exists
      *
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php

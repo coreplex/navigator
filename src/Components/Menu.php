@@ -262,6 +262,20 @@ class Menu implements IteratorAggregate, MenuContract
     }
 
     /**
+     * Convert the menu to an array.
+     */
+    public function toArray()
+    {
+        return array_map(function ($value) {
+            if (method_exists($value, 'toArray')) {
+                return $value->toArray();
+            }
+
+            return $value;
+        }, $this->items);
+    }
+
+    /**
      * @return string
      */
     public function __toString()

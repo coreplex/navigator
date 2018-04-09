@@ -34,5 +34,5 @@
 		"component": "package",
 		"frameworks": ["Laravel 5"]
 	},
-	"minimum-stability": "dev"
+	"minimum-stability": "stable"
 }

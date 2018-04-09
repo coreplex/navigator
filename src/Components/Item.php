@@ -95,6 +95,9 @@ class Item extends Menu implements ItemContract, ArrayAccess
         $response = $this->item;
 
         if (array_key_exists('items', $response)) {
+            // Reset the array keys to be 0 indexed.
+            $response['items'] = array_values($response['items']);
+
             foreach ($response['items'] as $key => $item) {
                 $response['items'][$key] = $item->toArray();
             }

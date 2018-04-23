@@ -124,7 +124,8 @@ class Menu implements IteratorAggregate, MenuContract
             $items[$key] = $item;
         }
 
-        return $items;
+        // Reset the indices.
+        return array_values($items);
     }
 
     /**

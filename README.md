@@ -6,7 +6,7 @@ A PHP 5.4+ package to create navigation menus, and handle active and permissions
 
 This package requires PHP 5.4+, and includes a Laravel 5 Service Provider and Facade.
 
-We recommend installing the package through composer. You can either call `composer require coreplex/notifier` in 
+We recommend installing the package through composer. You can either call `composer require coreplex/navigator` in 
 your command line, or add the following to your `composer.json` and then run either `composer install` or `composer 
 update` to download the package.
 
@@ -16,7 +16,7 @@ update` to download the package.
 
 ### Laravel 5 Integration
 
-To use the package with Laravel 5 firstly add the carpenter service provider to the list of service providers in 
+To use the package with Laravel 5 firstly add the service providers to the list in 
 `app/config/app.php`.
 
 ```php
